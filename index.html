@@ -1,156 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Humza Hashmi – Portfolio</title>
-  <style>
-    /* Reset & Base */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Courier New', monospace; line-height: 1.6; background: #0d1117; color: #e6edf3; }
-    a { color: #58a6ff; text-decoration: none; }
-    h1, h2, h3 { color: #f0f6fc; }
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
-    /* Smooth scroll */
-    html { scroll-behavior: smooth; }
+export default function Portfolio() {
+  const [showStars, setShowStars] = useState(false);
 
-    /* Hero Section */
-    header {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      overflow: hidden;
-    }
-    header h1 { font-size: 3rem; z-index: 2; }
-    header p { z-index: 2; }
+  useEffect(() => {
+    const timer = setTimeout(() => setShowStars(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
-    /* Code wallpaper background */
-    .code-bg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(88,166,255,0.05) 0,
-        rgba(88,166,255,0.05) 20px,
-        transparent 20px,
-        transparent 40px
-      );
-      animation: moveCode 10s linear infinite;
-      z-index: 1;
-    }
-    @keyframes moveCode {
-      from { background-position: 0 0; }
-      to { background-position: 0 100%; }
-    }
-
-    /* Container */
-    .container { max-width: 900px; margin: auto; padding: 2rem; }
-
-    /* Timeline */
-    .timeline { position: relative; padding-left: 2rem; border-left: 3px solid #58a6ff; }
-    .timeline-item { margin: 2rem 0; opacity: 0; transform: translateY(40px); transition: all 0.6s ease; }
-    .timeline-item.show { opacity: 1; transform: translateY(0); }
-
-    /* Projects */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-    .card { background: #161b22; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); transition: transform 0.3s; }
-    .card:hover { transform: translateY(-5px); }
-
-    /* Footer */
-    footer { text-align: center; padding: 2rem; color: #8b949e; }
-  </style>
-</head>
-<body>
-  <!-- Hero -->
-  <header>
-    <div class="code-bg"></div>
-    <h1>Humza Hashmi</h1>
-    <p>4th Year Computer Engineering Student | Software Developer</p>
-  </header>
-
-  <main class="container">
-    <!-- About -->
-    <section id="about">
-      <h2>About Me</h2>
-      <p>
-        I’m a 4th-year Computer Engineering student at Toronto Metropolitan University, specializing in software development. 
-        I’ve gained experience through internships, hackathons, and team projects like the Toronto Metropolitan Formula Racing Team. 
-        Passionate about building scalable solutions, I’m seeking new grad software engineering opportunities.
-      </p>
-    </section>
-
-    <!-- Experience Roadmap -->
-    <section id="experience">
-      <h2>Experience</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <h3>Fall 2021 – Started B.Eng. Computer Engineering at TMU</h3>
-          <p>Began undergraduate studies in software, systems, and engineering fundamentals.</p>
-        </div>
-        <div class="timeline-item">
-          <h3>Nov 2022 – Toronto Metropolitan Mini Hackathon</h3>
-          <p>Led a team of 4 to design and develop a mapping app for Toronto, winning 3rd place.</p>
-        </div>
-        <div class="timeline-item">
-          <h3>Nov 2022 – Sep 2023 – Toronto Met Formula Racing</h3>
-          <p>Worked as a Software & Electrical Member, optimizing vehicle systems and fostering cross-team collaboration.</p>
-        </div>
-        <div class="timeline-item">
-          <h3>May – Aug 2023 – AI Research Assistant, TMU</h3>
-          <p>Improved VR traffic prediction models by 23% and deployed Python AI APIs with PyTorch & TensorFlow.</p>
-        </div>
-        <div class="timeline-item">
-          <h3>May – Aug 2024 – IT & Logistics Intern, DC</h3>
-          <p>Led a social media campaign (+258k views), optimized logistics, and improved inventory tracking.</p>
-        </div>
-        <div class="timeline-item">
-          <h3>May – Aug 2025 – Software Engineer Intern, WM Liquidation</h3>
-          <p>Built ETL pipelines with AWS Glue, automated workflows with Lambda & Step Functions, and set up Git version control.</p>
-        </div>
+  return (
+    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+      {/* Code Background */}
+      <div className="absolute inset-0 z-0 animate-pulse opacity-20">
+        <pre className="text-green-400 text-xs p-4">
+{`for (let i=0; i<10; i++) {
+   console.log("Hello, world!");
+}`}        </pre>
       </div>
-    </section>
 
-    <!-- Projects -->
-    <section id="projects">
-      <h2>Projects</h2>
-      <div class="grid">
-        <div class="card"><h3>MazeRunner – Intelligent Robot</h3><p>Programmed an EEBot for autonomous maze navigation with 90% success, using sensor-guided motor control and path algorithms.</p></div>
-        <div class="card"><h3>BookWise – Java Bookstore</h3><p>Built a JavaFX bookstore with secure authentication, UML diagrams, and optimized team workflow.</p></div>
-        <div class="card"><h3>VisionGuard – Zoom Plugin</h3><p>Used Python & AWS Rekognition to monitor student attention, improving engagement by 15%.</p></div>
-        <div class="card"><h3>IceBreaker – Social Media App</h3><p>Full-stack app with React, Spring Boot, and AWS. Features facial verification, clustering, and mood analysis.</p></div>
-      </div>
-    </section>
+      {/* Nav */}
+      <nav className="fixed top-0 left-0 w-full flex justify-between items-center p-4 bg-black/70 z-20">
+        <h2 className="text-xl font-bold">Humza Hashmi</h2>
+        <div className="flex gap-4">
+          <Button variant="secondary" asChild>
+            <a href="mailto:humza@example.com">Hire Me</a>
+          </Button>
+          <Button variant="secondary" asChild>
+            <a href="/resume.pdf" target="_blank">Resume</a>
+          </Button>
+          <Button variant="secondary" asChild>
+            <a href="https://linkedin.com/in/humza" target="_blank">LinkedIn</a>
+          </Button>
+        </div>
+      </nav>
 
-    <!-- Contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:humzahashmi03@gmail.com">humzahashmi03@gmail.com</a></p>
-      <p>Phone: 647-554-9133</p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/humzahashmi03" target="_blank">linkedin.com/in/humzahashmi03</a></p>
-    </section>
-  </main>
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center h-screen relative z-10">
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+          className="text-6xl font-extrabold"
+        >
+          Humza Hashmi
+        </motion.h1>
 
-  <footer>
-    <p>© 2025 Humza Hashmi. All rights reserved.</p>
-  </footer>
+        {/* Shooting Star */}
+        {showStars && (
+          <motion.div
+            initial={{ x: -200, y: -200, opacity: 0 }}
+            animate={{ x: 300, y: 300, opacity: 1 }}
+            transition={{ duration: 2 }}
+            className="absolute top-20 left-10 w-1 h-1 bg-white rounded-full shadow-lg shadow-white"
+          ></motion.div>
+        )}
 
-  <script>
-    // Reveal timeline items on scroll
-    const items = document.querySelectorAll('.timeline-item');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.2 });
+        <p className="mt-6 text-lg text-gray-300">
+          4th Year Computer Engineering Student @ TMU | Software Specialist
+        </p>
+      </section>
 
-    items.forEach(item => observer.observe(item));
-  </script>
-</body>
-</html>
+      {/* Experience Section */}
+      <section className="p-10 space-y-6 z-10 relative">
+        <h2 className="text-3xl font-bold mb-6">Experience Roadmap</h2>
+        {[
+          { year: "Fall 2021", desc: "Started Computer Engineering at TMU" },
+          { year: "Nov 2021", desc: "Ryerson Mini Hackathon" },
+          { year: "2022", desc: "Joined Formula Racing Team as Software/Electrical Member" },
+          { year: "2023-2024", desc: "Completed multiple internships" },
+        ].map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.5 }}
+            viewport={{ once: true }}
+          >
+            <Card className="bg-gray-900 border border-gray-700">
+              <CardContent className="p-4">
+                <h3 className="text-xl font-semibold">{item.year}</h3>
+                <p className="text-gray-400">{item.desc}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </section>
+
+      {/* Projects Section */}
+      <section className="p-10 space-y-6 relative z-10">
+        <h2 className="text-3xl font-bold mb-6">Projects</h2>
+        {[
+          { title: "Portfolio Website", desc: "Built with React & Tailwind" },
+          { title: "Racing Telemetry System", desc: "For Formula Racing Team" },
+          { title: "Hackathon Projects", desc: "Prototypes in 24-48 hours" },
+        ].map((project, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Card className="bg-gray-900 border border-gray-700">
+              <CardContent className="p-4">
+                <h3 className="text-xl font-semibold">{project.title}</h3>
+                <p className="text-gray-400">{project.desc}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </section>
+    </div>
+  );
+}
