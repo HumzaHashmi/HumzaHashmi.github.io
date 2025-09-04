@@ -17,6 +17,7 @@
       color: #fff;
       background: #0d0d0d;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
     /* Code wallpaper background */
@@ -34,7 +35,31 @@
       z-index: -1;
     }
 
-    /* Typewriter hero section */
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem 2rem;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #1e90ff;
+    }
+
+    /* Hero section */
     .hero {
       height: 100vh;
       display: flex;
@@ -56,7 +81,7 @@
 
     @keyframes typing {
       from { width: 0 }
-      to { width: 18ch } /* adjust length of "Hi, I'm Humza Hashmi" */
+      to { width: 20ch }
     }
 
     @keyframes blink {
@@ -80,12 +105,70 @@
       0% { transform: translate(0, 0); opacity: 1; }
       100% { transform: translate(1200px, 600px); opacity: 0; }
     }
+
+    section {
+      padding: 100px 20px;
+      min-height: 100vh;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    /* Experience roadmap */
+    .roadmap {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .roadmap-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .roadmap-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Projects section */
+    .project {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .project.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
-
   <!-- Background -->
   <div class="background"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="mailto:humzahashmi03@gmail.com">Hire Me</a>
+    <a href="resume.pdf" target="_blank">Resume</a>
+    <a href="https://linkedin.com/in/humzahashmi03" target="_blank">LinkedIn</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -93,6 +176,56 @@
     <div class="shooting-star"></div>
   </section>
 
+  <!-- Experience -->
+  <section id="experience">
+    <h2>Experience Roadmap</h2>
+    <div class="roadmap">
+      <div class="roadmap-item">Started Computer Engineering at TMU – Fall 2021</div>
+      <div class="roadmap-item">Ryerson Mini Hackathon – November 2021</div>
+      <div class="roadmap-item">Toronto Met Formula Racing – Nov 2022 – Sep 2023</div>
+      <div class="roadmap-item">AI Research Assistant – Summer 2023</div>
+      <div class="roadmap-item">IT & Logistics Intern – Summer 2024</div>
+      <div class="roadmap-item">Software Engineer Intern – Summer 2025</div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project">MazeRunner – Programmed an intelligent EEBot for autonomous maze solving.</div>
+    <div class="project">BookWise – A Java-based bookstore application with authentication & UML design.</div>
+    <div class="project">VisionGuard – A Zoom plugin that uses AI to monitor student attention.</div>
+    <div class="project">IceBreaker – A social media app with AWS Rekognition & mood analysis.</div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:humzahashmi03@gmail.com">humzahashmi03@gmail.com</a></p>
+    <p>Phone: 647-554-9133</p>
+  </section>
+
+  <script>
+    // Reveal roadmap items one at a time on scroll
+    const roadmapItems = document.querySelectorAll(".roadmap-item");
+    const projectItems = document.querySelectorAll(".project");
+
+    function revealOnScroll(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }
+
+    const observer = new IntersectionObserver(revealOnScroll, {
+      threshold: 0.2
+    });
+
+    roadmapItems.forEach(item => observer.observe(item));
+    projectItems.forEach(item => observer.observe(item));
+  </script>
 </body>
 </html>
 
