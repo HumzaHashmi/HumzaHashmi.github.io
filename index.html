@@ -1,231 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Humza Hashmi – Software Engineer</title>
-  <meta name="description" content="Portfolio website for Humza Hashmi: projects, experience, skills, and contact." />
-  <meta name="color-scheme" content="light dark">
-  <meta property="og:title" content="Humza Hashmi – Software Engineer" />
-  <meta property="og:description" content="Projects, experience, and contact info." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="./preview.jpg" />
-  <meta name="theme-color" content="#0ea5e9" />
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Humza Hashmi – Portfolio</title>
   <style>
-    :root {
-      --bg: #0b0e14; --muted: #121723; --text: #e2e8f0; --subtle: #a0aec0;
-      --card: #0f1524; --accent: #0ea5e9; --accent-2: #22d3ee; --border: #1f2937;
-      --shadow: 0 10px 30px rgba(2,12,27,0.5);
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Courier New', monospace; line-height: 1.6; background: #0d1117; color: #e6edf3; }
+    a { color: #58a6ff; text-decoration: none; }
+    h1, h2, h3 { color: #f0f6fc; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Hero Section */
+    header {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: hidden;
     }
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #ffffff; --muted: #f7fafc; --text: #0f172a; --subtle: #475569;
-        --card: #ffffff; --accent: #0284c7; --accent-2: #0891b2; --border: #e2e8f0;
-        --shadow: 0 10px 25px rgba(2,12,27,0.08);
-      }
+    header h1 { font-size: 3rem; z-index: 2; }
+    header p { z-index: 2; }
+
+    /* Code wallpaper background */
+    .code-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(88,166,255,0.05) 0,
+        rgba(88,166,255,0.05) 20px,
+        transparent 20px,
+        transparent 40px
+      );
+      animation: moveCode 10s linear infinite;
+      z-index: 1;
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    @keyframes moveCode {
+      from { background-position: 0 0; }
+      to { background-position: 0 100%; }
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
-    /* Header */
-    header { position: sticky; top: 0; backdrop-filter: blur(10px); background: color-mix(in oklab, var(--bg), transparent 35%); border-bottom: 1px solid var(--border); z-index: 40; }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.3px; }
-    .brand .dot { width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: inline-block; box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 70%); }
-    nav a { padding: 10px 12px; border-radius: 10px; }
-    nav a:hover { background: color-mix(in oklab, var(--accent), transparent 90%); text-decoration: none; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border); background: linear-gradient(180deg, color-mix(in oklab, var(--card), white 4%), var(--card)); box-shadow: var(--shadow); color: var(--text); text-decoration: none; }
-    .btn:hover { border-color: color-mix(in oklab, var(--accent), transparent 60%); }
-
-    /* Hero */
-    .hero { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 36px; align-items: center; padding: 48px 0; }
-    .hero h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0 0 12px; }
-    .hero p.lead { font-size: clamp(16px, 1.6vw, 18px); color: var(--subtle); margin: 0 0 22px; }
-    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 0; }
-    .badge { border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; font-size: 12px; background: color-mix(in oklab, var(--card), transparent 10%); }
-    .avatar { width: 180px; height: 180px; border-radius: 20px; object-fit: cover; border: 1px solid var(--border); box-shadow: var(--shadow); }
-
-    /* Sections */
-    section { padding: 24px 0 8px; }
-    h2 { font-size: 22px; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
-    .section-desc { color: var(--subtle); margin-top: 0; }
-
-    /* Grid / Cards */
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .card { border: 1px solid var(--border); background: var(--card); border-radius: 16px; padding: 16px; transition: transform .15s ease, border-color .15s ease; }
-    .card:hover { transform: translateY(-2px); border-color: color-mix(in oklab, var(--accent), transparent 50%); }
-    .card h3 { margin: 4px 0 8px; font-size: 18px; }
-    .card p { margin: 0 0 10px; color: var(--subtle); }
-    .chiprow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    .chip { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); }
+    /* Container */
+    .container { max-width: 900px; margin: auto; padding: 2rem; }
 
     /* Timeline */
-    .timeline { position: relative; margin-left: 20px; border-left: 3px solid var(--accent); display: flex; flex-direction: column; gap: 30px; padding-left: 20px; }
-    .tl-item { position: relative; }
-    .tl-item::before { content: ""; position: absolute; left: -12px; top: 0; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; border: 3px solid var(--bg); }
-    .tl-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
-    .tl-role { font-weight: 600; }
-    .tl-meta { color: var(--subtle); font-size: 14px; }
+    .timeline { position: relative; padding-left: 2rem; border-left: 3px solid #58a6ff; }
+    .timeline-item { margin: 2rem 0; opacity: 0; transform: translateY(40px); transition: all 0.6s ease; }
+    .timeline-item.show { opacity: 1; transform: translateY(0); }
+
+    /* Projects */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .card { background: #161b22; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); transition: transform 0.3s; }
+    .card:hover { transform: translateY(-5px); }
 
     /* Footer */
-    footer { border-top: 1px solid var(--border); padding: 24px 0 40px; color: var(--subtle); }
-
-    /* Responsive */
-    @media (max-width: 920px) { .hero { grid-template-columns: 1fr; } .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { nav { display: none; } .grid { grid-template-columns: 1fr; } .avatar { width: 140px; height: 140px; } }
+    footer { text-align: center; padding: 2rem; color: #8b949e; }
   </style>
 </head>
 <body>
+  <!-- Hero -->
   <header>
-    <div class="container nav">
-      <div class="brand">
-        <span class="dot" aria-hidden="true"></span>
-        <span>humzahashmi.dev</span>
-      </div>
-      <nav aria-label="Primary">
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
+    <div class="code-bg"></div>
+    <h1>Humza Hashmi</h1>
+    <p>4th Year Computer Engineering Student | Software Developer</p>
   </header>
 
   <main class="container">
-    <!-- Hero -->
-    <section class="hero" id="about">
-      <div>
-        <h1>Hi, I'm <span style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color: transparent;">Humza Hashmi</span> — Software Engineer</h1>
-        <p class="lead">
-          I’m a 4th-year Computer Engineering student at Toronto Metropolitan University, specializing in software development. I’ve gained hands-on experience through multiple internships, hackathons, and collaborative projects. I’ve contributed to university teams like the Toronto Metropolitan Formula Racing Team, building both software and embedded systems. I’m passionate about solving complex problems, building scalable software solutions, and I’m actively seeking new grad opportunities where I can contribute, learn, and grow.
-        </p>
-        <div class="row">
-          <a class="btn" href="#experience">View Experience</a>
-          <a class="btn" href="./resume.pdf" download>Download Résumé</a>
-          <a class="btn" href="mailto:humzahashmi03@gmail.com">Email Me</a>
-          <a class="btn" href="https://www.linkedin.com/in/humzahashmi03" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-        <div class="badges">
-          <span class="badge">Open to work</span>
-          <span class="badge">Python • Java • JavaScript • C/C++</span>
-          <span class="badge">React • Spring Boot • Angular • AWS</span>
-          <span class="badge">Toronto / Remote</span>
-        </div>
-      </div>
-      <div>
-        <img class="avatar" src="./avatar.jpg" alt="Headshot of Humza Hashmi" />
-      </div>
+    <!-- About -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        I’m a 4th-year Computer Engineering student at Toronto Metropolitan University, specializing in software development. 
+        I’ve gained experience through internships, hackathons, and team projects like the Toronto Metropolitan Formula Racing Team. 
+        Passionate about building scalable solutions, I’m seeking new grad software engineering opportunities.
+      </p>
     </section>
 
-    <!-- Experience -->
+    <!-- Experience Roadmap -->
     <section id="experience">
-      <h2>Experience <span aria-hidden="true">🧭</span></h2>
+      <h2>Experience</h2>
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-head">
-            <span class="tl-role">Started B.Eng. Computer Engineering – TMU</span>
-            <span class="tl-meta">Fall 2021</span>
-          </div>
-          <p>Began undergraduate studies, specializing in software and systems engineering fundamentals.</p>
+        <div class="timeline-item">
+          <h3>Fall 2021 – Started B.Eng. Computer Engineering at TMU</h3>
+          <p>Began undergraduate studies in software, systems, and engineering fundamentals.</p>
         </div>
-        <div class="tl-item">
-          <div class="tl-head">
-            <span class="tl-role">Toronto Metropolitan Mini Hackathon – Team Lead</span>
-            <span class="tl-meta">Nov 2022</span>
-          </div>
-          <p>Led a team of 4 to design a Toronto mapping application, achieving 3rd place. Created maps with 7 key locations including demographics, statistics, and historical context.</p>
+        <div class="timeline-item">
+          <h3>Nov 2022 – Toronto Metropolitan Mini Hackathon</h3>
+          <p>Led a team of 4 to design and develop a mapping app for Toronto, winning 3rd place.</p>
         </div>
-        <div class="tl-item">
-          <div class="tl-head">
-            <span class="tl-role">Toronto Met Formula Racing Team – Software/Electrical Member</span>
-            <span class="tl-meta">Nov 2022 – Sep 2023</span>
-          </div>
-          <p>Optimized vehicle performance through iterative design, collaborated across departments, and contributed to a safer, improved race car.</p>
+        <div class="timeline-item">
+          <h3>Nov 2022 – Sep 2023 – Toronto Met Formula Racing</h3>
+          <p>Worked as a Software & Electrical Member, optimizing vehicle systems and fostering cross-team collaboration.</p>
         </div>
-        <div class="tl-item">
-          <div class="tl-head">
-            <span class="tl-role">AI Research Assistant – TMU</span>
-            <span class="tl-meta">May – Aug 2023</span>
-          </div>
-          <p>Improved VR traffic prediction models (+23%), deployed AI Python APIs, and collaborated with AI/ML teams for model validation and monitoring.</p>
+        <div class="timeline-item">
+          <h3>May – Aug 2023 – AI Research Assistant, TMU</h3>
+          <p>Improved VR traffic prediction models by 23% and deployed Python AI APIs with PyTorch & TensorFlow.</p>
         </div>
-        <div class="tl-item">
-          <div class="tl-head">
-            <span class="tl-role">IT & Logistics Intern – DC, Hamilton ON</span>
-            <span class="tl-meta">May – Aug 2024</span>
-          </div>
-          <p>Led data-driven campaigns, optimized delivery routes, and improved inventory tracking, increasing revenue and efficiency.</p>
+        <div class="timeline-item">
+          <h3>May – Aug 2024 – IT & Logistics Intern, DC</h3>
+          <p>Led a social media campaign (+258k views), optimized logistics, and improved inventory tracking.</p>
         </div>
-        <div class="tl-item">
-          <div class="tl-head">
-            <span class="tl-role">Software Engineer Intern – WM Liquidation, Toronto ON</span>
-            <span class="tl-meta">May – Aug 2025</span>
-          </div>
-          <p>Built ETL pipelines with AWS Glue & Bedrock LLMs, automated workflows using Lambda/Step Functions, and implemented Git version control workflow.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills -->
-    <section id="skills">
-      <h2>Skills <span aria-hidden="true">🧰</span></h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Languages & Scripting</h3>
-          <p>Python, Java, JavaScript, C, C++, HTML, CSS, VHDL</p>
-        </div>
-        <div class="card">
-          <h3>Frameworks & Tools</h3>
-          <p>React, Spring Boot, Angular, MySQL, Docker, Kubernetes, Git, JUnit, AWS</p>
+        <div class="timeline-item">
+          <h3>May – Aug 2025 – Software Engineer Intern, WM Liquidation</h3>
+          <p>Built ETL pipelines with AWS Glue, automated workflows with Lambda & Step Functions, and set up Git version control.</p>
         </div>
       </div>
     </section>
 
     <!-- Projects -->
     <section id="projects">
-      <h2>Projects <span aria-hidden="true">💻</span></h2>
+      <h2>Projects</h2>
       <div class="grid">
-        <div class="card">
-          <h3>MazeRunner – Intelligent Robot</h3>
-          <p>Programmed an EEBot for autonomous maze navigation with 90% success. Developed algorithms for intersections, path selection, and sensor-guided motor control.</p>
-        </div>
-        <div class="card">
-          <h3>BookWise – Java Bookstore</h3>
-          <p>Collaborated on a JavaFX bookstore with UML diagrams, secure authentication, and optimized team workflow for faster development.</p>
-        </div>
-        <div class="card">
-          <h3>VisionGuard – Zoom Plugin</h3>
-          <p>Built a Zoom plugin using Python & AWS Rekognition to monitor student attention, triggering real-time alerts to improve engagement by 15%.</p>
-        </div>
-        <div class="card">
-          <h3>IceBreaker – Social Media App</h3>
-          <p>Full-stack application with React, Spring Boot, AWS, and MySQL. Integrated facial verification, clustering algorithm for user matching, and mood analysis with AWS Comprehend.</p>
-        </div>
+        <div class="card"><h3>MazeRunner – Intelligent Robot</h3><p>Programmed an EEBot for autonomous maze navigation with 90% success, using sensor-guided motor control and path algorithms.</p></div>
+        <div class="card"><h3>BookWise – Java Bookstore</h3><p>Built a JavaFX bookstore with secure authentication, UML diagrams, and optimized team workflow.</p></div>
+        <div class="card"><h3>VisionGuard – Zoom Plugin</h3><p>Used Python & AWS Rekognition to monitor student attention, improving engagement by 15%.</p></div>
+        <div class="card"><h3>IceBreaker – Social Media App</h3><p>Full-stack app with React, Spring Boot, and AWS. Features facial verification, clustering, and mood analysis.</p></div>
       </div>
     </section>
 
     <!-- Contact -->
     <section id="contact">
-      <h2>Contact <span aria-hidden="true">✉️</span></h2>
+      <h2>Contact</h2>
       <p>Email: <a href="mailto:humzahashmi03@gmail.com">humzahashmi03@gmail.com</a></p>
       <p>Phone: 647-554-9133</p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/humzahashmi03" target="_blank" rel="noopener">linkedin.com/in/humzahashmi03</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/humzahashmi03" target="_blank">linkedin.com/in/humzahashmi03</a></p>
     </section>
   </main>
 
-  <footer class="container">
+  <footer>
     <p>© 2025 Humza Hashmi. All rights reserved.</p>
   </footer>
+
+  <script>
+    // Reveal timeline items on scroll
+    const items = document.querySelectorAll('.timeline-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    items.forEach(item => observer.observe(item));
+  </script>
 </body>
 </html>
