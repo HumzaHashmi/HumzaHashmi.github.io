@@ -1,119 +1,415 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Humza Hashmi – Software Engineer</title>
+  <meta name="description" content="Portfolio website for Humza Hashmi: projects, experience, skills, and contact." />
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="Humza Hashmi – Software Engineer" />
+  <meta property="og:description" content="Projects, experience, and contact info." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./preview.jpg" />
+  <meta name="theme-color" content="#0ea5e9" />
 
-export default function Portfolio() {
-  const [showStars, setShowStars] = useState(false);
+  <style>
+    /* ===== Design Tokens ===== */
+    :root {
+      --bg: #0b0e14;
+      --muted: #121723;
+      --text: #e2e8f0;
+      --subtle: #a0aec0;
+      --card: #0f1524;
+      --accent: #0ea5e9;
+      --accent-2: #22d3ee;
+      --border: #1f2937;
+      --shadow: 0 10px 30px rgba(2,12,27,0.5);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #ffffff;
+        --muted: #f7fafc;
+        --text: #0f172a;
+        --subtle: #475569;
+        --card: #ffffff;
+        --accent: #0284c7;
+        --accent-2: #0891b2;
+        --border: #e2e8f0;
+        --shadow: 0 10px 25px rgba(2,12,27,0.08);
+      }
+    }
 
-  useEffect(() => {
-    const timer = setTimeout(() => setShowStars(true), 3000);
-    return () => clearTimeout(timer);
-  }, []);
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    section { padding: 24px 0 8px; scroll-margin-top: 80px; }
+    h2 { font-size: 22px; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+    .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
-  return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Code Background */}
-      <div className="absolute inset-0 z-0 animate-pulse opacity-20">
-        <pre className="text-green-400 text-xs p-4">
-{`for (let i=0; i<10; i++) {
-   console.log("Hello, world!");
-}`}        </pre>
+    /* ===== Top Bar (Contact at top) ===== */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(10px);
+      background: color-mix(in oklab, var(--bg), transparent 35%);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.2px; }
+    .brand .dot { width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 70%); }
+    .nav-links { display: flex; gap: 10px; }
+    .nav-links a { padding: 8px 10px; border-radius: 10px; }
+    .nav-links a:hover { background: color-mix(in oklab, var(--accent), transparent 90%); text-decoration: none; }
+    .cta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--card), white 4%), var(--card));
+      color: var(--text); box-shadow: var(--shadow);
+    }
+    .btn:hover { border-color: color-mix(in oklab, var(--accent), transparent 60%); text-decoration: none; }
+
+    /* ===== Hero with Code Wallpaper & Animated Name ===== */
+    .hero { position: relative; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 36px; align-items: center; padding: 48px 0; min-height: 80vh; }
+    .hero h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0 0 12px; }
+    .hero p.lead { font-size: clamp(16px, 1.6vw, 18px); color: var(--subtle); margin: 0 0 22px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 0; }
+    .badge { border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; font-size: 12px; background: color-mix(in oklab, var(--card), transparent 10%); }
+    .avatar { width: 180px; height: 180px; border-radius: 20px; object-fit: cover; border: 1px solid var(--border); box-shadow: var(--shadow); }
+
+    /* Code wallpaper overlay */
+    .code-wall {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1;
+      background: repeating-linear-gradient(to bottom, rgba(88,166,255,0.06) 0 20px, transparent 20px 40px);
+    }
+    .code-stream {
+      position: absolute; white-space: pre; color: color-mix(in oklab, var(--accent), white 20%);
+      opacity: 0.14; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px; left: 0; right: 0;
+      animation: scroll-code 16s linear infinite;
+    }
+    @keyframes scroll-code { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+
+    /* Typewriter name */
+    .typewriter {
+      display: inline-block;
+      border-right: 2px solid var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0ch;
+      animation:
+        typing 2.2s steps(13, end) forwards,
+        caret 0.8s step-end infinite;
+    }
+    @keyframes typing { to { width: 13ch; } } /* 'Humza Hashmi' = 13ch */
+    @keyframes caret { 50% { border-color: transparent; } }
+
+    /* Shooting star after name appears */
+    .shooting-star {
+      position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff;
+      box-shadow: 0 0 6px 2px rgba(255,255,255,0.8);
+      top: 10%; left: -10%;
+      opacity: 0;
+      animation: shoot 1.8s ease-out 2.4s forwards; /* delay until name done */
+    }
+    .shooting-star::after {
+      content: ""; position: absolute; width: 140px; height: 2px; right: 2px; top: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0));
+      transform: translateY(0.5px);
+    }
+    @keyframes shoot {
+      0%   { transform: translate(0,0) rotate(12deg); opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: translate(120vw, 40vh) rotate(12deg); opacity: 0; }
+    }
+
+    /* ===== Cards / Grid ===== */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { border: 1px solid var(--border); background: var(--card); border-radius: 16px; padding: 16px; transition: transform .15s ease, border-color .15s ease, opacity .3s ease; }
+    .card:hover { transform: translateY(-2px); border-color: color-mix(in oklab, var(--accent), transparent 50%); }
+    .card h3 { margin: 4px 0 8px; font-size: 18px; }
+    .card p { margin: 0 0 10px; color: var(--subtle); }
+
+    /* ===== Experience Timeline (with pop-in) ===== */
+    .timeline { position: relative; margin-left: 20px; border-left: 3px solid var(--accent); display: flex; flex-direction: column; gap: 26px; padding-left: 20px; }
+    .tl-item { position: relative; opacity: 0; transform: translateY(24px); }
+    .tl-item.show { opacity: 1; transform: translateY(0); transition: opacity .5s ease, transform .5s ease; }
+    .tl-item::before { content: ""; position: absolute; left: -12px; top: 0; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; border: 3px solid var(--bg); }
+    .tl-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+    .tl-role { font-weight: 600; }
+    .tl-meta { color: var(--subtle); font-size: 14px; }
+
+    /* ===== Projects: one-at-a-time carousel ===== */
+    .carousel { position: relative; }
+    .track {
+      display: flex; gap: 16px; overflow-x: auto;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth; padding-bottom: 8px;
+    }
+    .project-card {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      border: 1px solid var(--border); background: var(--card); border-radius: 16px; padding: 18px;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .4s ease, transform .4s ease;
+      min-height: 200px;
+    }
+    .project-card.show { opacity: 1; transform: translateY(0); }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      border: 1px solid var(--border); background: color-mix(in oklab, var(--card), transparent 0%);
+      color: var(--text); padding: 10px 12px; border-radius: 12px; cursor: pointer;
+    }
+    .carousel-btn:hover { border-color: color-mix(in oklab, var(--accent), transparent 50%); }
+    .prev { left: -6px; }
+    .next { right: -6px; }
+
+    /* ===== Footer ===== */
+    footer { border-top: 1px solid var(--border); padding: 24px 0 40px; color: var(--subtle); }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      .avatar { width: 140px; height: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Contact Bar -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <span>humzahashmi.dev</span>
       </div>
 
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 w-full flex justify-between items-center p-4 bg-black/70 z-20">
-        <h2 className="text-xl font-bold">Humza Hashmi</h2>
-        <div className="flex gap-4">
-          <Button variant="secondary" asChild>
-            <a href="mailto:humza@example.com">Hire Me</a>
-          </Button>
-          <Button variant="secondary" asChild>
-            <a href="/resume.pdf" target="_blank">Resume</a>
-          </Button>
-          <Button variant="secondary" asChild>
-            <a href="https://linkedin.com/in/humza" target="_blank">LinkedIn</a>
-          </Button>
-        </div>
-      </nav>
+      <div class="nav-links" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+      </div>
 
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center h-screen relative z-10">
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-          className="text-6xl font-extrabold"
-        >
-          Humza Hashmi
-        </motion.h1>
-
-        {/* Shooting Star */}
-        {showStars && (
-          <motion.div
-            initial={{ x: -200, y: -200, opacity: 0 }}
-            animate={{ x: 300, y: 300, opacity: 1 }}
-            transition={{ duration: 2 }}
-            className="absolute top-20 left-10 w-1 h-1 bg-white rounded-full shadow-lg shadow-white"
-          ></motion.div>
-        )}
-
-        <p className="mt-6 text-lg text-gray-300">
-          4th Year Computer Engineering Student @ TMU | Software Specialist
-        </p>
-      </section>
-
-      {/* Experience Section */}
-      <section className="p-10 space-y-6 z-10 relative">
-        <h2 className="text-3xl font-bold mb-6">Experience Roadmap</h2>
-        {[
-          { year: "Fall 2021", desc: "Started Computer Engineering at TMU" },
-          { year: "Nov 2021", desc: "Ryerson Mini Hackathon" },
-          { year: "2022", desc: "Joined Formula Racing Team as Software/Electrical Member" },
-          { year: "2023-2024", desc: "Completed multiple internships" },
-        ].map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.5 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-gray-900 border border-gray-700">
-              <CardContent className="p-4">
-                <h3 className="text-xl font-semibold">{item.year}</h3>
-                <p className="text-gray-400">{item.desc}</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </section>
-
-      {/* Projects Section */}
-      <section className="p-10 space-y-6 relative z-10">
-        <h2 className="text-3xl font-bold mb-6">Projects</h2>
-        {[
-          { title: "Portfolio Website", desc: "Built with React & Tailwind" },
-          { title: "Racing Telemetry System", desc: "For Formula Racing Team" },
-          { title: "Hackathon Projects", desc: "Prototypes in 24-48 hours" },
-        ].map((project, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: i * 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-gray-900 border border-gray-700">
-              <CardContent className="p-4">
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-                <p className="text-gray-400">{project.desc}</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </section>
+      <div class="cta">
+        <a class="btn" href="mailto:humzahashmi03@gmail.com">Hire Me</a>
+        <a class="btn" href="./resume.pdf" target="_blank" rel="noopener">Resume</a>
+        <a class="btn" href="https://www.linkedin.com/in/humzahashmi03" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </div>
-  );
+  </div>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero" id="about">
+      <!-- animated code wallpaper -->
+      <div class="code-wall" aria-hidden="true">
+        <pre class="code-stream">
+const skills = ["Python","Java","JS","C/C++","React","Spring Boot","AWS"];
+function build() {
+  return skills.map(s => `shipping ${s}...`).join("\n");
 }
+console.log(build());
+// data pipelines • ETL • LLMs • Graphs • CI/CD • Docker • K8s • Postgres
+        </pre>
+      </div>
+
+      <div>
+        <h1>
+          Hi, I'm <span class="typewriter">Humza Hashmi</span>
+          <span class="shooting-star" aria-hidden="true"></span>
+        </h1>
+        <p class="lead">
+          I’m a 4th-year Computer Engineering student at Toronto Metropolitan University, specializing in software development.
+          I’ve gained hands-on experience through internships, hackathons, and the Toronto Met Formula Racing Team.
+          I love turning complex problems into reliable, scalable products—and I’m actively seeking new-grad roles.
+        </p>
+        <div class="badges">
+          <span class="badge">Open to work</span>
+          <span class="badge">Python • Java • JavaScript • C/C++</span>
+          <span class="badge">React • Spring Boot • Angular • AWS</span>
+          <span class="badge">Toronto / Remote</span>
+        </div>
+      </div>
+
+      <div>
+        <img class="avatar" src="./avatar.jpg" alt="Headshot of Humza Hashmi" />
+      </div>
+    </section>
+
+    <!-- Experience (Roadmap with pop-in) -->
+    <section id="experience">
+      <h2>Experience <span aria-hidden="true">🧭</span></h2>
+      <div class="timeline" id="timeline">
+        <div class="tl-item">
+          <div class="tl-head">
+            <span class="tl-role">Started B.Eng. Computer Engineering – TMU</span>
+            <span class="tl-meta">Fall 2021</span>
+          </div>
+          <p>Began undergraduate studies, specializing in software and systems engineering fundamentals.</p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-head">
+            <span class="tl-role">Toronto Metropolitan Mini Hackathon – Team Lead</span>
+            <span class="tl-meta">November 2022</span>
+          </div>
+          <p>Led a team of 4 to design a Toronto mapping app (3rd place). Built a map with 7 key locations including demographics, statistics, and historical context.</p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-head">
+            <span class="tl-role">Toronto Met Formula Racing – Software/Electrical Member</span>
+            <span class="tl-meta">Nov 2022 – Sep 2023</span>
+          </div>
+          <p>Optimized vehicle performance through iterative design/testing, improved safety, and facilitated cross-team integration of components/systems.</p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-head">
+            <span class="tl-role">AI Research Assistant – TMU</span>
+            <span class="tl-meta">May – Aug 2023</span>
+          </div>
+          <p>Improved VR traffic prediction accuracy by 23% using Python (PyTorch/TensorFlow). Deployed 16+ AI-powered APIs and validated models for robustness.</p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-head">
+            <span class="tl-role">IT & Logistics Intern – DC, Hamilton ON</span>
+            <span class="tl-meta">May – Aug 2024</span>
+          </div>
+          <p>Grew social reach to 258k views (+22% revenue), optimized routes (-8% wait time), and enhanced inventory tracking for 7-figure assets.</p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-head">
+            <span class="tl-role">Software Engineer Intern – WM Liquidation, Toronto ON</span>
+            <span class="tl-meta">May – Aug 2025</span>
+          </div>
+          <p>Built a scalable ETL pipeline with AWS Glue and Bedrock LLMs; automated microservices with Lambda & Step Functions; introduced Git workflows with scoped IAM.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <h2>Skills <span aria-hidden="true">🧰</span></h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Languages & Scripting</h3>
+          <p>Python, Java, JavaScript, C, C++, HTML, CSS, VHDL</p>
+        </article>
+        <article class="card">
+          <h3>Frameworks & Tools</h3>
+          <p>React, Spring Boot, Angular, MySQL, Docker, Kubernetes, Git, JUnit, AWS</p>
+        </article>
+        <article class="card">
+          <h3>Education</h3>
+          <p>
+            B.Eng. Computer Engineering — Toronto Metropolitan University (Expected April 2026)<br/>
+            Related coursework: Algorithms II, Databases, OOP, Computer Networks, Computer Vision
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects (one at a time) -->
+    <section id="projects">
+      <h2>Projects <span aria-hidden="true">💻</span></h2>
+
+      <div class="carousel">
+        <button class="carousel-btn prev" aria-label="Previous project" id="prevBtn">‹</button>
+        <div class="track" id="track" aria-live="polite">
+          <article class="project-card">
+            <h3>MazeRunner — Intelligent Robot</h3>
+            <p>Programmed an EEBot for autonomous maze navigation (≈90% success). Algorithms for intersections, path decisions, dead-end recovery, and sensor-guided motor control.</p>
+          </article>
+
+          <article class="project-card">
+            <h3>BookWise — Java Bookstore</h3>
+            <p>Java/JavaFX app with secure authentication, UML design, and collaborative workflow that improved development pace by ~20%.</p>
+          </article>
+
+          <article class="project-card">
+            <h3>VisionGuard — Zoom Plugin</h3>
+            <p>Python + AWS Rekognition to monitor student attention; real-time alerts helped increase engagement by ~15%.</p>
+          </article>
+
+          <article class="project-card">
+            <h3>IceBreaker — Social Media App</h3>
+            <p>Full-stack (React, Spring Boot, AWS, MySQL). Facial verification with Rekognition, K-means interest matching, and mood analysis via AWS Comprehend.</p>
+          </article>
+        </div>
+        <button class="carousel-btn next" aria-label="Next project" id="nextBtn">›</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container row" style="justify-content: space-between;">
+      <span>© <span id="year"></span> Humza Hashmi. All rights reserved.</span>
+      <span>Built with vanilla HTML/CSS/JS · Deployed on GitHub Pages</span>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ===== Experience pop-in (staggered) =====
+    const tlItems = Array.from(document.querySelectorAll('.tl-item'));
+    const tlObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // stagger each item once the container is visible
+          tlItems.forEach((item, i) => setTimeout(() => item.classList.add('show'), i * 130));
+          tlObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    const timeline = document.getElementById('timeline');
+    if (timeline) tlObserver.observe(timeline);
+
+    // ===== Reveal project cards when they first come into view =====
+    const projectCards = document.querySelectorAll('.project-card');
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.35 });
+    projectCards.forEach(c => cardObserver.observe(c));
+
+    // ===== Simple carousel controls (one-at-a-time) =====
+    const track = document.getElementById('track');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function scrollByOne(direction = 1) {
+      const cardWidth = track.querySelector('.project-card').getBoundingClientRect().width + 16; // include gap
+      track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+    prevBtn.addEventListener('click', () => scrollByOne(-1));
+    nextBtn.addEventListener('click', () => scrollByOne(1));
+
+    // Keyboard support for carousel (left/right)
+    track.setAttribute('tabindex', '0');
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') scrollByOne(1);
+      if (e.key === 'ArrowLeft') scrollByOne(-1);
+    });
+  </script>
+</body>
+</html>
 
